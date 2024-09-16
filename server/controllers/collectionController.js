@@ -1,4 +1,4 @@
-const Collection = require('../models/Collection');
+const Collection = require('../models/CollectionC');
 
 // Create a new collection
 exports.createCollection = async (req, res) => {

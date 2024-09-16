@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // Required to serve static files
 const connectDB = require('./config/db');  // Import the database connection
 
 // Import routes
@@ -26,7 +27,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes
+// API Routes
 app.use('/api/categories', categoryRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/products', productRoutes);
@@ -34,8 +35,21 @@ app.use('/api/collection-products', collectionProductRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api', videoRoutes);
 
+// Serve static files from the front-end build folder if you have a front-end
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Root Route (if there's no front-end or just want to serve a message)
+app.get('/', (req, res) => {
+    res.send('Welcome to the E-commerce API');
+});
+
+// Handle any other routes, and send back the index.html file if serving front-end
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 // Define port
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 // Start the server
 app.listen(PORT, () => {
