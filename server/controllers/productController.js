@@ -132,25 +132,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// Delete a product
-exports.deleteProduct = async (req, res) => {
-  try {
-    const { productId } = req.params;
 
-    // Check if the product exists
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    // Delete the product
-    await product.remove();
-
-    res.status(200).json({ message: 'Product deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
 
 // Get all products without category ID
 exports.getAllProducts = async (req, res) => {
@@ -162,6 +144,24 @@ exports.getAllProducts = async (req, res) => {
 
     // Send response with all products and their full details
     res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete a product
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    // Delete the product directly by ID
+    const product = await Product.findByIdAndDelete(productId);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json({ message: 'Product deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

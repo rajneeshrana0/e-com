@@ -101,15 +101,15 @@ exports.updateCollectionProduct = async (req, res) => {
 };
 
 // Delete a product from a specific collection
+// Delete a collection product
 exports.deleteCollectionProduct = async (req, res) => {
   try {
-    const product = await CollectionProduct.findById(req.params.productId);
+    const product = await CollectionProduct.findByIdAndDelete(req.params.productId);
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    await product.remove();
     res.status(200).json({ message: 'Product deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });

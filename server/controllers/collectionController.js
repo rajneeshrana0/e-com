@@ -56,15 +56,15 @@ exports.updateCollection = async (req, res) => {
 };
 
 // Delete a specific collection
+// Delete a specific collection by ID
 exports.deleteCollection = async (req, res) => {
   try {
-    const collection = await Collection.findById(req.params.collectionId);
+    const collection = await Collection.findByIdAndDelete(req.params.collectionId);
 
     if (!collection) {
       return res.status(404).json({ message: 'Collection not found' });
     }
 
-    await collection.remove();
     res.status(200).json({ message: 'Collection deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });

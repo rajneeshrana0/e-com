@@ -56,15 +56,15 @@ exports.updateCategory = async (req, res) => {
 };
 
 // Delete a specific category by ID
+// Delete a specific category by ID
 exports.deleteCategory = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.categoryId);
+    const category = await Category.findByIdAndDelete(req.params.categoryId);
 
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
 
-    await category.remove();
     res.status(200).json({ message: 'Category deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
