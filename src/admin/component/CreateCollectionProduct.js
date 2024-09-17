@@ -24,7 +24,7 @@ const CreateEditCollectionProduct = () => {
 
   const fetchCollections = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/collections');
+      const response = await axios.get('https://e-com-backend-dxii.onrender.com/api/collections');
       setCollections(response.data);
     } catch (error) {
       console.error('Error fetching collections:', error);
@@ -34,7 +34,7 @@ const CreateEditCollectionProduct = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/collection-products/products');
+      const response = await axios.get('https://e-com-backend-dxii.onrender.com/api/collection-products/products');
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -67,8 +67,8 @@ const CreateEditCollectionProduct = () => {
 
     try {
       const url = isEditMode
-        ? `http://localhost:5000/api/collection-products/${selectedCollection}/products/${productId}`
-        : `http://localhost:5000/api/collection-products/${selectedCollection}/products`;
+        ? `https://e-com-backend-dxii.onrender.com/api/collection-products/${selectedCollection}/products/${productId}`
+        : `https://e-com-backend-dxii.onrender.com/api/collection-products/${selectedCollection}/products`;
 
       const method = isEditMode ? 'put' : 'post';
 
@@ -119,7 +119,7 @@ const CreateEditCollectionProduct = () => {
   const handleDelete = async (collectionId, productId) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/collection-products/${collectionId}/products/${productId}`);
+        await axios.delete(`https://e-com-backend-dxii.onrender.com/api/collection-products/${collectionId}/products/${productId}`);
         toast.success('Product deleted successfully!');
         fetchProducts(); // Refresh product list
       } catch (error) {
